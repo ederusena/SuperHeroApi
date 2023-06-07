@@ -39,7 +39,7 @@ namespace src.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<SuperHero>> GetById(int id)
         {
-            var hero = heroes.FirstOrDefault(h => h.Id == id);
+            var hero = await _context.SuperHeroes.FindAsync(id);
             if (hero == null)
                 return NotFound("Hero not found.");
             
@@ -49,8 +49,10 @@ namespace src.Controllers
         [HttpPost]
         public async Task<ActionResult<List<SuperHero>>> AddHero(SuperHero hero)
         {
-            heroes.Add(hero);
-            return Ok(heroes);
+            _context.SuperHeroes.Add(hero);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.SuperHeroes.ToListAsync());
         }
 
         [HttpPut("{id}")]
