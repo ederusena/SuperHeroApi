@@ -58,28 +58,31 @@ namespace src.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<List<SuperHero>>> UpdateHero(SuperHero hero, int id)
         {
-            var heroToUpdate = heroes.FirstOrDefault(h => h.Id == id);
-            if (heroToUpdate == null)
+            var dbHero = await _context.SuperHeroes.FindAsync(id);
+            if (dbHero == null)
                 return NotFound("Hero not found.");
             
-            heroToUpdate.Name = hero.Name;
-            heroToUpdate.FirstName = hero.FirstName;
-            heroToUpdate.LastName = hero.LastName;
-            heroToUpdate.Place = hero.Place;
+            dbHero.Name = hero.Name;
+            dbHero.FirstName = hero.FirstName;
+            dbHero.LastName = hero.LastName;
+            dbHero.Place = hero.Place;
 
-            return Ok(heroes);
+            await _context.SaveChangesAsync();
+
+            return Ok(await _context.SuperHeroes.ToListAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<SuperHero>>> DeleteHero(int id)
         {
-            var heroToDelete = heroes.FirstOrDefault(h => h.Id == id);
+            var heroToDelete = await _context.SuperHeroes.FindAsync(id);
             if (heroToDelete == null)
                 return NotFound("Hero not found.");
             
-            heroes.Remove(heroToDelete);
-
-            return Ok(heroToDelete);
+            _context.SuperHeroes.Remove(heroToDelete);
+            await _context.SaveChangesAsync();
+            
+            return Ok(await _context.SuperHeroes.ToListAsync());
         }
         // [HttpGet]
         // public async Task<ActionResult<List<SuperHero>>> GetAll()
