@@ -22,7 +22,7 @@ docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=9766" -e "MSSQL_PID=Express"
 
 
 docker exec -it <container_id|container_name> /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P <your_password>
-docker exec -it 0b9 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 9766
+docker exec -it 0b9 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P SENHA
 
 
 # Criar migrations
@@ -31,4 +31,4 @@ dotnet ef migrations add CreateInitial
 # Criar o banco de fato no SGBD
 dotnet ef database update
 
-// // "DefaultConnection": "jdbc:sqlserver://;serverName=localhost:1433;databaseName=superherodb"
+// // "DefaultConnection": "Server=localhost,1433;Database=superherodb;User Id=sa;Password=SENHA;Encrypt=false;"
