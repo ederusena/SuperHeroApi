@@ -7,22 +7,22 @@ namespace src.Controllers
     [ApiController]
     public class SuperHeroController : ControllerBase
     {
-        private static List<SuperHero> heroes = new List<SuperHero>{
-            new SuperHero {
-                Id = 1,
-                Name = "Batman",
-                FirstName = "Bruce",
-                LastName = "Wayne",
-                Place = "Gotham City"
-            },
-            new SuperHero {
-                Id = 2,
-                Name = "Ironman",
-                FirstName = "Tony",
-                LastName = "Stark",
-                Place = "Cleveland"
-            }
-        };
+        // private static List<SuperHero> heroes = new List<SuperHero>{
+        //     new SuperHero {
+        //         Id = 1,
+        //         Name = "Batman",
+        //         FirstName = "Bruce",
+        //         LastName = "Wayne",
+        //         Place = "Gotham City"
+        //     },
+        //     new SuperHero {
+        //         Id = 2,
+        //         Name = "Ironman",
+        //         FirstName = "Tony",
+        //         LastName = "Stark",
+        //         Place = "Cleveland"
+        //     }
+        // };
 
          private readonly DataContext _context;
         public SuperHeroController(DataContext context)
@@ -81,7 +81,7 @@ namespace src.Controllers
             
             _context.SuperHeroes.Remove(heroToDelete);
             await _context.SaveChangesAsync();
-            
+
             return Ok(await _context.SuperHeroes.ToListAsync());
         }
         // [HttpGet]
